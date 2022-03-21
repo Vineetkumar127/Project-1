@@ -252,45 +252,6 @@ const deleteBlogByID = async function (req, res) {
 }
 
 
-// const deleteBlogByID = async function (req, res) {
-//     try {
-//         const param = req.param
-//         const blogId = param.blogId
-//         const authorIdFromToken =req.authorId
-
-//         if(!isValidObjectId(blogId))
-//         { 
-//             res.status(400).send({ status: false, message: '$(blogId) is not a valid blog Id' })
-//             return
-//         }
-//         if(!isValidObjectId(authorIdFromToken))
-//         { 
-//             res.status(400).send({ status: false, message: '$(authorIdFromToken) is not a valid blog Id' })
-//             return
-//         }
-
-//         const blog =await blogModel.findOne({_id: blogId, isDeleted:false, deletedAt:null})
-         
-//         if(!blog)
-//         { 
-//             res.status(400).send({ status: false, message: 'blog not found' })
-//             return
-//         }
-
-//         if(blog.authorId.toString() !== authorIdFromToken)
-//         { 
-//            res.status(401).send({ status: false, message: "Unauthorized access! Owner info doesn't match" });
-//            return
-//         }
-        
-//         await blogModel.findOneAndUpdate({_id:blogId},{$set:{isDeleted:true, deletedAt:new Date()}})
-//         res.status(200).send({ status: true, message: 'Blog deleted successfully' })
-//     } 
-//     catch (err) {
-//         res.status(500).send({ status: false, message: err.mesage })
-//     }
-
-// }
 
 
 const deleteBlogByParams = async function (req, res) {
@@ -301,7 +262,7 @@ const deleteBlogByParams = async function (req, res) {
             return res.status(400).send({ status: false, msg: "bad request" })
         }
 
-        // let multipleDeletes = await BlogModel.find({ $and: [{ isDeleted: false},{ authorId: authorId }, { $or: [{ blogId: blogId }, { category: category }, { tags: tags }, { subcategory: subcategory }, { isPublished: isPublished }] }] })
+        
         let multipleDeletes = await blogModel.find({ $and: [{ isDeleted: false, authorId: authorId }, { $or: [{ authorId: authorId }, { blogId: blogId }, { category: category }, { tags: tags }, { subcategory: subcategory }, { isPublished: isPublished }] }] })
        
         if (multipleDeletes.length <= 0) {

@@ -1,6 +1,7 @@
 const authorModel = require("../models/authorModel")
 const jwt = require("jsonwebtoken");
 
+//------------- ISVALID FUNCTION
 const isValid = function(value){
   if(typeof value === 'undefined'|| value ===  null) return false
   if(typeof value=== 'string' && value.trim().length ===0) return false
@@ -10,6 +11,7 @@ const isValid = function(value){
 const isValidTitle=  function (title){
   return[ 'Mr','Mrs','Miss'].indexOf(title) !== -1
 }
+//---------------------ISVALIDREQUESTBODY FUNCTION
 const isValidRequestBody= function (requestBody){
   return Object.keys(requestBody).length>0
 }
